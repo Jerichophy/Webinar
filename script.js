@@ -47,11 +47,11 @@ const rules = [
     validate: (pw) => (pw.match(/\d/g) || []).length >= 2,
   },
   {
-    text: "Password must contain at least 1 special character (@, #, $, %, ^, &, *).",
+    text: "Password must contain at least 1 special character.",
     validate: (pw) => /[@#$%^&*]/.test(pw),
   },
   {
-    text: 'Password must include a common household animal (English or Tagalog, e.g., "cat", "pusa")',
+    text: 'Password must include a common household animal',
     validate: (pw) => {
       const animalList = [
         "cat", "dog", "fish", "rat", "bat", "ant", "fly", "bug", "mouse",
@@ -80,32 +80,34 @@ const rules = [
   },
     {
     text: "Password must contain a loveteam sa classroom",
-    validate: (pw) => {
-        const ships = ["GabRon", "Almille", "Panget"];
-        const pairs = [
-        [["aaron","manalo"], ["ategab","gab"]],
-        ["sarah", "micko"],
-        ["heart", "roy"],
-        [["rap", "raphael"], "lara"],
-        [["Catcatan","Christian"], ["Shannah"]]
-        ];
+  validate: (pw) => {
+    const ships = ["GabRon", "Almille", "Panget"];
+    const pairs = [
+      [["aaron", "manalo","ron"], ["ategab", "gab"]],
+      ["sarah", "micko"],
+      ["heart", "roy"],
+      [["rap", "raphael"], "lara"],
+      [["catcatan", "christian"], "shannah"]
+    ];
 
-        // Check if a ship name is present
-        const hasShip = ships.some(name => createLeetRegex(name).test(pw));
-        if (hasShip) return true;
+    // Ship name check
+    const hasShip = ships.some(name => createLeetRegex(name).test(pw));
+    if (hasShip) return true;
 
-        // Check if a loveteam pair is present (both names)
-        return pairs.some(pair => {
-        if (Array.isArray(pair[0])) {
-            // e.g., ["rap", "raphael"] + "lara"
-            return pair[0].some(name1 => createLeetRegex(name1).test(pw)) &&
-                createLeetRegex(pair[1]).test(pw);
-        } else {
-            return createLeetRegex(pair[0]).test(pw) &&
-                createLeetRegex(pair[1]).test(pw);
-        }
-        });
-    }
+    // Pair check: leetspeak + side-by-side
+    return pairs.some(pair => {
+      const namesA = Array.isArray(pair[0]) ? pair[0] : [pair[0]];
+      const namesB = Array.isArray(pair[1]) ? pair[1] : [pair[1]];
+
+      return namesA.some(a =>
+        namesB.some(b => {
+          const ab = createLeetRegex(a + b);
+          const ba = createLeetRegex(b + a);
+          return ab.test(pw) || ba.test(pw);
+        })
+      );
+    });
+  }
   },
   {
     text: "Password must not contain spaces or underscores.",
@@ -116,8 +118,10 @@ const rules = [
     validate: (pw) => /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2B50}\u{1F004}-\u{1F0CF}\u{2300}-\u{23FF}\u{2B06}\u{2194}\u{1F1E6}-\u{1F1FF}]/gu.test(pw),
   },
   {
-    text: "Password must contain the OSPF cost to reach the router A LAN 172.16.1.0/24 from B.<br><img src='images/OSPFCost.png' alt='OSPF Cost' style='max-width:100%; margin-top:10px;'>",
-    validate: (pw) => pw.includes("65")
+    text: "Which type of Ethernet cable is used to directly connect.<br><img src='images/Cable.png' alt='OSPF Cost' style='max-width:100%; margin-top:10px;'>",
+    validate: (pw) => {const Cable = ['Crossover'];
+    return /crossover/i.test(pw) || Cable.some(c => createLeetRegex(c).test(pw));
+    }
   }
 ];
 
