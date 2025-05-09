@@ -1,0 +1,118 @@
+/* General body styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('images/img.jpg'); /* Add your image path here */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: #cac8c8; /* Ensure text is visible */
+}
+
+/* Container styling */
+.container {
+  background: rgba(25, 25, 112, 0.8); /* Semi-transparent white */
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 450px;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Heading styling */
+h1 {    
+  font-size: 2.5em;
+  color: #e2b6e0;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Paragraph styling */
+p {
+  font-size: 1.1em;
+  color: #c9c1c1;
+  margin-bottom: 25px;
+}
+
+/* Password input field styling */
+.password-input {
+  margin-bottom: 30px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1em;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* Rule box styling */
+#rule-box {
+  margin-top: 20px;
+  background: #e6bfe0;
+  color: #a51575;
+  border-left: 5px solid #d84e93;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: left;
+  max-width: 350px;
+  margin: 20px auto;
+  animation: bubbleUp 1s ease-out;
+}
+
+/* Rule text styling */
+#rule-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333333; /* Darker color for better contrast */
+  transition: color 0.3s ease;
+}
+
+/* Success message styling */
+#success-message {
+  margin-top: 20px;
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  padding: 15px;
+  border-radius: 10px;
+  animation: slideUp 1s ease-in-out;
+}
+
+/* Hidden element styling */
+.hidden {
+  display: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes bubbleUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Spacing adjustments */
+.password-input, #rule-box, #success-message {
+  margin-bottom: 20px;
+}
