@@ -173,7 +173,7 @@ confirmInput.addEventListener("input", () => {
   if (confirmInput.value === passwordInput.value) {
     clearTimeout(confirmTimeout);
     confirmMessage.innerText = "✅ Passwords match!";
-    victorySound.play(); // 🎉 Play victory sound
+    victorySound.play();
   } else {
     confirmMessage.innerText = "❌ Passwords do not match.";
   }
