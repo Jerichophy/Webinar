@@ -47,7 +47,7 @@ const rules = [
     validate: (pw) => (pw.match(/\d/g) || []).length >= 2,
   },
   {
-    text: "Password must contain at least 1 special character (no exclamation).",
+    text: "Password must contain at least 1 special character.",
     validate: (pw) => /[@#$%^&*!?]/.test(pw),
   },
   {
