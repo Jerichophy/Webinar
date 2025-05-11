@@ -47,7 +47,7 @@ const rules = [
     validate: (pw) => (pw.match(/\d/g) || []).length >= 2,
   },
   {
-    text: "Password must contain at least 1 special character.",
+    text: "Password must contain at least 1 special character (no exclamation).",
     validate: (pw) => /[@#$%^&*!?]/.test(pw),
   },
   {
@@ -72,7 +72,7 @@ const rules = [
     validate: (pw) => /\d{4}/.test(pw),
   },
   {
-    text: "Password must reference subjects na nagpahiwalay.",
+    text: "Password must reference subjects na nagpahiwalay sa ECE Sakalam.",
     validate: (pw) => {
       const nuke = ["feedback", "elex3","elex 3", "electronics", "DSP"];
       return nuke.some(nuke => createLeetRegex(nuke).test(pw));
