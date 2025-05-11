@@ -6,6 +6,10 @@ const confirmContainer = document.getElementById('confirm-container');
 const confirmInput = document.getElementById('confirm-password');
 const confirmMessage = document.getElementById('confirm-message');
 
+// Sound effects
+const victorySound = document.getElementById('victory-sound');
+const failSound = document.getElementById('fail-sound');
+
 let brokenRules = [];
 let confirmTimeout;
 
@@ -74,40 +78,38 @@ const rules = [
   {
     text: "Password must reference subjects na nagpahiwalay sa ECE Sakalam.",
     validate: (pw) => {
-      const nuke = ["feedback", "elex3","elex 3", "electronics", "DSP"];
+      const nuke = ["feedback", "elex3", "elex 3", "electronics", "DSP"];
       return nuke.some(nuke => createLeetRegex(nuke).test(pw));
     }
   },
-    {
+  {
     text: "Password must contain a loveteam sa classroom",
-  validate: (pw) => {
-    const ships = ["GabRon", "Almille", "Panget"];
-    const pairs = [
-      [["aaron", "manalo","ron"], ["ategab", "gab"]],
-      ["sarah", "micko"],
-      ["heart", "roy"],
-      [["rap", "raphael"], "lara"],
-      [["catcatan", "christian"], "shannah"]
-    ];
+    validate: (pw) => {
+      const ships = ["GabRon", "Almille", "Panget"];
+      const pairs = [
+        [["aaron", "manalo", "ron"], ["ategab", "gab"]],
+        ["sarah", "micko"],
+        ["heart", "roy"],
+        [["rap", "raphael"], "lara"],
+        [["catcatan", "christian"], "shannah"]
+      ];
 
-    // Ship name check
-    const hasShip = ships.some(name => createLeetRegex(name).test(pw));
-    if (hasShip) return true;
+      const hasShip = ships.some(name => createLeetRegex(name).test(pw));
+      if (hasShip) return true;
 
-    // Pair check: leetspeak + side-by-side
-    return pairs.some(pair => {
-      const namesA = Array.isArray(pair[0]) ? pair[0] : [pair[0]];
-      const namesB = Array.isArray(pair[1]) ? pair[1] : [pair[1]];
+      return pairs.some(pair => {
+        const namesA = Array.isArray(pair[0]) ? pair[0] : [pair[0]];
+        const namesB = Array.isArray(pair[1]) ? pair[1] : [pair[1]];
 
-      return namesA.some(a =>
-        namesB.some(b => {
-          const ab = createLeetRegex(a + b);
-          const ba = createLeetRegex(b + a);
-          return ab.test(pw) || ba.test(pw);
-        })
-      );
-    });
-  }
+        return namesA.some(a =>
+          namesB.some(b => {
+            const ab = createLeetRegex(a + b);
+            const ba = createLeetRegex(b + a);
+            return ab.test(pw) || ba.test(pw);
+          })
+        );
+      });
+    }
   },
   {
     text: "Password must not contain spaces or underscores.",
@@ -119,8 +121,9 @@ const rules = [
   },
   {
     text: "Which type of Ethernet cable is used to directly connect.<br><img src='images/Cable.png' alt='OSPF Cost' style='max-width:100%; margin-top:10px;'>",
-    validate: (pw) => {const Cable = ['Crossover'];
-    return /crossover/i.test(pw) || Cable.some(c => createLeetRegex(c).test(pw));
+    validate: (pw) => {
+      const Cable = ['Crossover'];
+      return /crossover/i.test(pw) || Cable.some(c => createLeetRegex(c).test(pw));
     }
   }
 ];
@@ -170,6 +173,7 @@ confirmInput.addEventListener("input", () => {
   if (confirmInput.value === passwordInput.value) {
     clearTimeout(confirmTimeout);
     confirmMessage.innerText = "✅ Passwords match!";
+    victorySound.play(); // 🎉 Play victory sound
   } else {
     confirmMessage.innerText = "❌ Passwords do not match.";
   }
@@ -183,6 +187,7 @@ passwordInput.addEventListener("input", (e) => {
 
 // Auto-reset the form to its initial state
 function resetForm() {
+  failSound.play(); // 💀 Play fail sound when time runs out
   passwordInput.type = "text";  // Show the password again
   passwordInput.value = "";
   ruleBox.classList.remove("hidden");
