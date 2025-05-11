@@ -48,7 +48,7 @@ const rules = [
   },
   {
     text: "Password must contain at least 1 special character.",
-    validate: (pw) => /[@#$%^&*]/.test(pw),
+    validate: (pw) => /[@#$%^&*!?]/.test(pw),
   },
   {
     text: 'Password must include a common household animal',
@@ -68,7 +68,7 @@ const rules = [
     validate: (pw) => !/[aeiou]/i.test(pw),
   },
   {
-    text: "Password must contain exactly 4 consecutive numbers (e.g., 1234).",
+    text: "Password must contain exactly 4 consecutive numbers.",
     validate: (pw) => /\d{4}/.test(pw),
   },
   {
