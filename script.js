@@ -7,8 +7,8 @@ const confirmInput = document.getElementById('confirm-password');
 const confirmMessage = document.getElementById('confirm-message');
 
 // Sound effects
-var victorySound = new Audio('https://github.com/user/project/blob/main/images/success.mp3?raw=true');
-var failSound = new Audio('https://github.com/user/project/blob/main/images/lost.mp3?raw=true');
+var victorySound = new Audio('https://github.com/Jerichophy/Webinar/blob/main/images/success.mp3?raw=true');
+var failSound = new Audio('https://github.com/Jerichophy/Webinar/blob/main/images/lost.mp3?raw=true');
 
 let brokenRules = [];
 let confirmTimeout;
